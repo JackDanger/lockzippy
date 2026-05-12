@@ -1,1 +1,0 @@
-/Users/jackdanger/www/lockzippy/target/debug/liblockzippy.rlib: /Users/jackdanger/www/lockzippy/build.rs /Users/jackdanger/www/lockzippy/scripts/pre-commit /Users/jackdanger/www/lockzippy/scripts/pre-push /Users/jackdanger/www/lockzippy/src/decrypt/mod.rs /Users/jackdanger/www/lockzippy/src/error.rs /Users/jackdanger/www/lockzippy/src/lib.rs
