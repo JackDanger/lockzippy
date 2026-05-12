@@ -1,0 +1,11 @@
+/Users/jackdanger/www/lockzippy/target/debug/deps/ciborium_ll-4acc6c8540dce9a4.d: /Users/jackdanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ciborium-ll-0.2.2/src/lib.rs /Users/jackdanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ciborium-ll-0.2.2/src/dec.rs /Users/jackdanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ciborium-ll-0.2.2/src/enc.rs /Users/jackdanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ciborium-ll-0.2.2/src/hdr.rs /Users/jackdanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ciborium-ll-0.2.2/src/seg.rs
+
+/Users/jackdanger/www/lockzippy/target/debug/deps/libciborium_ll-4acc6c8540dce9a4.rlib: /Users/jackdanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ciborium-ll-0.2.2/src/lib.rs /Users/jackdanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ciborium-ll-0.2.2/src/dec.rs /Users/jackdanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ciborium-ll-0.2.2/src/enc.rs /Users/jackdanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ciborium-ll-0.2.2/src/hdr.rs /Users/jackdanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ciborium-ll-0.2.2/src/seg.rs
+
+/Users/jackdanger/www/lockzippy/target/debug/deps/libciborium_ll-4acc6c8540dce9a4.rmeta: /Users/jackdanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ciborium-ll-0.2.2/src/lib.rs /Users/jackdanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ciborium-ll-0.2.2/src/dec.rs /Users/jackdanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ciborium-ll-0.2.2/src/enc.rs /Users/jackdanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ciborium-ll-0.2.2/src/hdr.rs /Users/jackdanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ciborium-ll-0.2.2/src/seg.rs
+
+/Users/jackdanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ciborium-ll-0.2.2/src/lib.rs:
+/Users/jackdanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ciborium-ll-0.2.2/src/dec.rs:
+/Users/jackdanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ciborium-ll-0.2.2/src/enc.rs:
+/Users/jackdanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ciborium-ll-0.2.2/src/hdr.rs:
+/Users/jackdanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ciborium-ll-0.2.2/src/seg.rs:

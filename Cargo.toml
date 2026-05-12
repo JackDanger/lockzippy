@@ -1,0 +1,24 @@
+[package]
+name = "lockzippy"
+version = "0.0.1"
+edition = "2021"
+description = "Pure-Rust AES-256 decryptor for 7z archives, part of the 8z umbrella"
+license = "Zlib"
+repository = "https://github.com/JackDanger/lockzippy"
+authors = ["Jack Danger Canty"]
+build = "build.rs"
+
+[dependencies]
+thiserror = "1"
+# RustCrypto backend for AES-256-CBC and SHA-256 KDF (7z spec).
+aes = "0.8"
+sha2 = "0.10"
+cbc = { version = "0.1", features = ["std"] }
+cipher = "0.4"
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
+
+[[bench]]
+name = "decrypt"
+harness = false
