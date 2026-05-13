@@ -93,8 +93,16 @@ impl AesProperties {
         let has_salt = (b0 >> 7) & 1 != 0;
 
         // When present: salt_size = upper_nibble(b1) + 1, iv_size = lower_nibble(b1) + 1
-        let salt_size: usize = if has_salt { (((b1 >> 4) & 0x0F) + 1) as usize } else { 0 };
-        let iv_size: usize = if has_iv { ((b1 & 0x0F) + 1) as usize } else { 0 };
+        let salt_size: usize = if has_salt {
+            (((b1 >> 4) & 0x0F) + 1) as usize
+        } else {
+            0
+        };
+        let iv_size: usize = if has_iv {
+            ((b1 & 0x0F) + 1) as usize
+        } else {
+            0
+        };
 
         let required = 2 + salt_size + iv_size;
         if props.len() < required {
@@ -174,14 +182,14 @@ pub fn decrypt_aes256_cbc(
     key: &[u8; 32],
     iv: &[u8; 16],
 ) -> LockzippyResult<Vec<u8>> {
-    if ciphertext.len() % 16 != 0 {
+    if !ciphertext.len().is_multiple_of(16) {
         return Err(LockzippyError::InvalidCiphertextLength(ciphertext.len()));
     }
 
     let mut buf = ciphertext.to_vec();
     Decryptor::<Aes256>::new(key.into(), iv.into())
         .decrypt_padded_mut::<NoPadding>(&mut buf)
-        .map_err(|e| LockzippyError::decrypt(e))?;
+        .map_err(LockzippyError::decrypt)?;
 
     Ok(buf)
 }
