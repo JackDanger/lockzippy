@@ -1,9 +1,9 @@
 use std::fmt;
 use thiserror::Error;
 
-/// All errors produced by lockzippy.
+/// All errors produced by aeszippy.
 #[derive(Error, Debug)]
-pub enum LockzippyError {
+pub enum AeszippyError {
     /// The ciphertext length is not a multiple of the AES block size (16 bytes).
     #[error("ciphertext length {0} is not a multiple of AES block size 16")]
     InvalidCiphertextLength(usize),
@@ -25,12 +25,12 @@ pub enum LockzippyError {
     Io(#[from] std::io::Error),
 }
 
-impl LockzippyError {
+impl AeszippyError {
     /// Construct a decrypt error from any `Display` value.
     pub fn decrypt<T: fmt::Display>(msg: T) -> Self {
-        LockzippyError::DecryptError(msg.to_string())
+        AeszippyError::DecryptError(msg.to_string())
     }
 }
 
-/// Convenience alias used throughout lockzippy.
-pub type LockzippyResult<T> = Result<T, LockzippyError>;
+/// Convenience alias used throughout aeszippy.
+pub type AeszippyResult<T> = Result<T, AeszippyError>;

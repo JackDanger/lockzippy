@@ -1,4 +1,4 @@
-//! lockzippy — Pure-Rust AES-256 encrypt/decrypt for 7z archives, part of the 8z umbrella.
+//! aeszippy — Pure-Rust AES-256 encrypt/decrypt for 7z archives. Part of the [7-zippy](https://github.com/JackDanger/7zippy) family.
 //!
 //! 7z uses AES-256-CBC with a SHA-256-based KDF. The codec method ID is
 //! `[0x06, 0xF1, 0x07, 0x01]` (7zAES).
@@ -6,7 +6,7 @@
 //! ## Usage: Decrypt
 //!
 //! ```rust,no_run
-//! use lockzippy::decrypt::decrypt_7z;
+//! use aeszippy::decrypt::decrypt_7z;
 //!
 //! // props comes from the 7z container (AES codec properties blob).
 //! // password is the archive password supplied by the user.
@@ -19,7 +19,7 @@
 //! ## Usage: Encrypt
 //!
 //! ```rust,no_run
-//! use lockzippy::encrypt::encrypt_7z;
+//! use aeszippy::encrypt::encrypt_7z;
 //!
 //! let plaintext = b"hello, encrypted world!";
 //! let result = encrypt_7z(plaintext, "my_password").unwrap();

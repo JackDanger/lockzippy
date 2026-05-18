@@ -1,10 +1,10 @@
 [package]
-name = "lockzippy"
-version = "0.0.2"
+name = "aeszippy"
+version = "0.0.3"
 edition = "2021"
-description = "Pure-Rust AES-256 encrypt/decrypt for 7z archives, part of the 8z umbrella"
+description = "Pure-Rust AES-256 encrypt/decrypt for 7z archives. Part of the 7-zippy family."
 license = "Zlib"
-repository = "https://github.com/JackDanger/lockzippy"
+repository = "https://github.com/JackDanger/aeszippy"
 authors = ["Jack Danger Canty"]
 build = "build.rs"
 

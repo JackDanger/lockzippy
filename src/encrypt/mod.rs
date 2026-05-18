@@ -22,7 +22,7 @@
 //! ```
 
 use crate::decrypt::derive_key;
-use crate::error::{LockzippyError, LockzippyResult};
+use crate::error::{AeszippyError, AeszippyResult};
 
 use aes::Aes256;
 use cbc::Encryptor;
@@ -34,10 +34,10 @@ const DEFAULT_NUM_CYCLES_POWER: u8 = 19;
 // ── IV generation ─────────────────────────────────────────────────────────────
 
 /// Generate a fresh random 16-byte AES IV using the system CSPRNG.
-fn random_iv() -> LockzippyResult<[u8; 16]> {
+fn random_iv() -> AeszippyResult<[u8; 16]> {
     let mut iv = [0u8; 16];
     getrandom::getrandom(&mut iv).map_err(|e| {
-        LockzippyError::Io(std::io::Error::other(format!(
+        AeszippyError::Io(std::io::Error::other(format!(
             "failed to generate random IV: {e}"
         )))
     })?;
@@ -56,12 +56,12 @@ fn random_iv() -> LockzippyResult<[u8; 16]> {
 ///
 /// # Errors
 ///
-/// Returns [`LockzippyError::Io`] if the CSPRNG fails.
+/// Returns [`AeszippyError::Io`] if the CSPRNG fails.
 pub fn encrypt_aes256_cbc(
     plaintext: &[u8],
     key: &[u8; 32],
     iv: &[u8; 16],
-) -> LockzippyResult<Vec<u8>> {
+) -> AeszippyResult<Vec<u8>> {
     // Pad plaintext to a multiple of 16 bytes with zeros (7z convention).
     let block_count = plaintext.len().div_ceil(16);
     let padded_len = block_count * 16;
@@ -70,7 +70,7 @@ pub fn encrypt_aes256_cbc(
 
     Encryptor::<Aes256>::new(key.into(), iv.into())
         .encrypt_padded_mut::<NoPadding>(&mut buf, padded_len)
-        .map_err(|e| LockzippyError::DecryptError(format!("AES encrypt error: {e}")))?;
+        .map_err(|e| AeszippyError::DecryptError(format!("AES encrypt error: {e}")))?;
 
     Ok(buf)
 }
@@ -108,7 +108,7 @@ pub struct EncryptResult {
 /// # Errors
 ///
 /// Returns an error if the CSPRNG fails (very unlikely in practice).
-pub fn encrypt_7z(plaintext: &[u8], password: &str) -> LockzippyResult<EncryptResult> {
+pub fn encrypt_7z(plaintext: &[u8], password: &str) -> AeszippyResult<EncryptResult> {
     let iv = random_iv()?;
     let key = derive_key(password, &[], DEFAULT_NUM_CYCLES_POWER);
     let ciphertext = encrypt_aes256_cbc(plaintext, &key, &iv)?;
@@ -121,7 +121,7 @@ pub fn encrypt_7z(plaintext: &[u8], password: &str) -> LockzippyResult<EncryptRe
 /// Returns the decrypted bytes (which may have zero-padding at the end if
 /// `plaintext.len()` was not a multiple of 16). The caller should trim to
 /// the original length.
-pub fn encrypt_then_decrypt(plaintext: &[u8], password: &str) -> LockzippyResult<Vec<u8>> {
+pub fn encrypt_then_decrypt(plaintext: &[u8], password: &str) -> AeszippyResult<Vec<u8>> {
     use crate::decrypt::decrypt_7z;
     let result = encrypt_7z(plaintext, password)?;
     decrypt_7z(&result.ciphertext, &result.props, password)
@@ -134,7 +134,7 @@ mod tests {
 
     #[test]
     fn encrypt_decrypt_round_trip() {
-        let plaintext = b"hello, AES-256 encryption in lockzippy!";
+        let plaintext = b"hello, AES-256 encryption in aeszippy!";
         let password = "test1234";
 
         let result = encrypt_7z(plaintext, password).expect("encrypt_7z failed");

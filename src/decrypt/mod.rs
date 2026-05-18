@@ -45,7 +45,7 @@
 //! key := sha.finalize()
 //! ```
 
-use crate::error::{LockzippyError, LockzippyResult};
+use crate::error::{AeszippyError, AeszippyResult};
 
 use aes::Aes256;
 use cbc::Decryptor;
@@ -76,10 +76,10 @@ impl AesProperties {
     ///
     /// # Errors
     ///
-    /// Returns [`LockzippyError::InvalidProperties`] if the blob is too short.
-    pub fn parse(props: &[u8]) -> LockzippyResult<Self> {
+    /// Returns [`AeszippyError::InvalidProperties`] if the blob is too short.
+    pub fn parse(props: &[u8]) -> AeszippyResult<Self> {
         if props.len() < 2 {
-            return Err(LockzippyError::InvalidProperties(props.len()));
+            return Err(AeszippyError::InvalidProperties(props.len()));
         }
 
         let b0 = props[0];
@@ -106,7 +106,7 @@ impl AesProperties {
 
         let required = 2 + salt_size + iv_size;
         if props.len() < required {
-            return Err(LockzippyError::InvalidProperties(props.len()));
+            return Err(AeszippyError::InvalidProperties(props.len()));
         }
 
         let salt = props[2..2 + salt_size].to_vec();
@@ -175,21 +175,21 @@ pub fn derive_key(password: &str, salt: &[u8], num_cycles_power: u8) -> [u8; 32]
 ///
 /// # Errors
 ///
-/// Returns [`LockzippyError::InvalidCiphertextLength`] if `ciphertext.len()` is
+/// Returns [`AeszippyError::InvalidCiphertextLength`] if `ciphertext.len()` is
 /// not a multiple of 16.
 pub fn decrypt_aes256_cbc(
     ciphertext: &[u8],
     key: &[u8; 32],
     iv: &[u8; 16],
-) -> LockzippyResult<Vec<u8>> {
+) -> AeszippyResult<Vec<u8>> {
     if !ciphertext.len().is_multiple_of(16) {
-        return Err(LockzippyError::InvalidCiphertextLength(ciphertext.len()));
+        return Err(AeszippyError::InvalidCiphertextLength(ciphertext.len()));
     }
 
     let mut buf = ciphertext.to_vec();
     Decryptor::<Aes256>::new(key.into(), iv.into())
         .decrypt_padded_mut::<NoPadding>(&mut buf)
-        .map_err(LockzippyError::decrypt)?;
+        .map_err(AeszippyError::decrypt)?;
 
     Ok(buf)
 }
@@ -209,7 +209,7 @@ pub fn decrypt_aes256_cbc(
 /// The decrypted bytes. These may contain AES-block-alignment padding at the
 /// end (up to 15 zeros); the caller should trim to the expected uncompressed
 /// size.
-pub fn decrypt_7z(ciphertext: &[u8], props: &[u8], password: &str) -> LockzippyResult<Vec<u8>> {
+pub fn decrypt_7z(ciphertext: &[u8], props: &[u8], password: &str) -> AeszippyResult<Vec<u8>> {
     let aes_props = AesProperties::parse(props)?;
     let key = derive_key(password, &aes_props.salt, aes_props.num_cycles_power);
     decrypt_aes256_cbc(ciphertext, &key, &aes_props.iv)
@@ -279,6 +279,6 @@ mod tests {
     #[test]
     fn parse_too_short_props() {
         let result = AesProperties::parse(&[42u8]);
-        assert!(matches!(result, Err(LockzippyError::InvalidProperties(1))));
+        assert!(matches!(result, Err(AeszippyError::InvalidProperties(1))));
     }
 }
